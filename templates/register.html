@@ -1,0 +1,32 @@
+<!-- templates/register.html - 注册页面 -->
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <h3 class="mb-4 text-center">用户注册</h3>
+    <!-- 注意：form 增加了 enctype -->
+    <form method="post" enctype="multipart/form-data">
+      <!-- 用户名 -->
+      <div class="mb-3">
+        <label for="username" class="form-label">用户名</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <!-- 密码 -->
+      <div class="mb-3">
+        <label for="password" class="form-label">密码</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <!-- 头像上传 -->
+      <div class="mb-3">
+        <label for="avatar" class="form-label">上传头像</label>
+        <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
+      </div>
+      <!-- 提交按钮 -->
+      <button type="submit" class="btn btn-success w-100">注册</button>
+    </form>
+    <p class="text-center mt-3">
+      已有账号？<a href="{{ url_for('login') }}">点此登录</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

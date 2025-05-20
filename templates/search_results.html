@@ -1,0 +1,51 @@
+<!-- templates/search_results.html - 搜索结果页面 -->
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">搜索结果</h3>
+{% if q %}
+  <p>关键字 “<strong>{{ q }}</strong>”，共找到 {{ total_count }} 条资源。</p>
+{% endif %}
+{% if resources %}
+  <!-- 与资源列表类似的表格显示 -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>类别</th>
+          <th>下载次数</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for res in resources %}
+        <tr>
+          <td>{{ res.name }}</td>
+          <td>{{ res.category }}</td>
+          <td>{{ res.download_count }}</td>
+          <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('download', res_id=res.id) }}">下载</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- 分页导航，保留搜索关键词参数 -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('search', q=q, page=page-1) }}">上一页</a>
+      </li>
+      {% for p in range(1, total_pages + 1) %}
+      <li class="page-item {% if p == page %}active{% endif %}">
+        <a class="page-link" href="{{ url_for('search', q=q, page=p) }}">{{ p }}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('search', q=q, page=page+1) }}">下一页</a>
+      </li>
+    </ul>
+  </nav>
+{% else %}
+  <p>未找到匹配的资源。</p>
+{% endif %}
+{% endblock %}

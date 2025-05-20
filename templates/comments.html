@@ -1,0 +1,25 @@
+<!-- templates/comments.html - 显示评论列表 -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto p-4">
+  <h3 class="text-2xl mb-4">资源评论</h3>
+  {% if comments %}
+    <ul class="space-y-4">
+      {% for comment in comments %}
+        <li class="p-4 border rounded">
+          <p class="text-gray-800"><strong>{{ comment.username }}</strong> <span class="text-gray-500 text-sm">{{ comment.timestamp }}</span></p>
+          <p class="mt-2">{{ comment.comment }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>暂时没有评论，快来抢沙发吧！</p>
+  {% endif %}
+  <div class="mt-6">
+    <a href="{{ url_for('comment', res_id=res_id) }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">添加评论</a>
+  </div>
+  <div class="mt-2">
+    <a href="{{ url_for('resources') }}" class="text-blue-500 hover:underline">返回资源列表</a>
+  </div>
+</div>
+{% endblock %}
